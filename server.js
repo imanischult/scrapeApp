@@ -1,27 +1,41 @@
-  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-  var $ = cheerio.load(response.data);
+// require cheerio to parse HTML and axios to make requests for HTML pages
 
-  // An empty array to save the data that we'll scrape
-  var results = [];
+const cheerio = require("cheerio");
+const axios = require("axios");
 
-  // With cheerio, find each p-tag with the "title" class
-  // (i: iterator. element: the current element)
-  $("p.title").each(function(i, element) {
+// Tell the console what the server.js file is doing
 
-    // Save the text of the element in a "title" variable
-    var title = $(element).text();
+console.log("Scraping for coffee listings...");
 
-    // In the currently selected element, look at its child elements (i.e., its a-tags),
-    // then save the values for any "href" attributes that the child elements may have
-    var link = $(element).children().attr("href");
+// Make request via axios
 
-    // Save these results in an object that we'll push into the results array we defined earlier
-    results.push({
-      title: title,
-      link: link
+axios
+  .get(
+    "https://kuntzcoffee.com/we-accept-paypal-or-any-major-credit-card-at-checkout-and-we-charge-a-flat-rate-of-5-99-to-ship-each-order/"
+  )
+  .then(function(response) {
+    const $ = cheerio.load(response.data);
+    const coffees = [];
+
+    // Find each li tag with the class "product"
+
+    $("li.product").each(function(index, element) {
+      //Save what it grabs in a variable
+      const coffName = $(element)
+        .find("a")
+        .find("h2")
+        .text();
+
+      const img = $(element)
+        .find("a")
+        .find("img")
+        .attr("src");
+
+      // Push the info to the array
+      coffees.push({
+        title: coffName,
+        image: img
+      });
     });
+    console.log(coffees);
   });
-
-  // Log the results once you've looped through each of the elements found with cheerio
-  console.log(results);
-});

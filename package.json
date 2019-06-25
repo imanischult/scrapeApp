@@ -1,0 +1,26 @@
+{
+  "name": "scrapeApp",
+  "version": "1.0.0",
+  "description": "This app utilizes npm's scraping package to scrape repeating elements from a website that sells coffee.",
+  "main": "practice.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "axios": "^0.19.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imanischult/scrapeApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imanischult/scrapeApp/issues"
+  },
+  "homepage": "https://github.com/imanischult/scrapeApp#readme"
+}
